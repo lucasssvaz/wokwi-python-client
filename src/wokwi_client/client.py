@@ -20,6 +20,7 @@ from .file_ops import (
     upload,
     upload_file,
     upload_idf_firmware,
+    upload_text,
 )
 from .framebuffer import (
     read_framebuffer_png_bytes,
@@ -89,6 +90,19 @@ class WokwiClient:
             content: The file content as bytes.
         """
         await upload(self._transport, name, content)
+
+    async def upload_text(self, name: str, content: str) -> None:
+        """
+        Upload a text file to the simulator from a string.
+
+        Use this method for text-based files such as JSON chip definitions
+        (``*.chip.json``). For binary files, use :meth:`upload`.
+
+        Args:
+            name: The name to use for the uploaded file.
+            content: The file content as a string.
+        """
+        await upload_text(self._transport, name, content)
 
     async def upload_file(self, filename: str, local_path: Optional[Path] = None) -> str:
         """
