@@ -36,6 +36,8 @@ async def upload_file(
 ) -> str:
     firmware_path = local_path or filename
     file_path = Path(firmware_path)
+    # Use the remote filename's extension to determine the upload format,
+    # since the server's interpretation is based on the destination name.
     if Path(filename).suffix in _TEXT_EXTENSIONS:
         text_content = file_path.read_text(encoding="utf-8")
         await upload_text(transport, filename, text_content)
